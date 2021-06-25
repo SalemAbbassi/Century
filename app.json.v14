@@ -1,0 +1,25 @@
+{
+  "id": "aaae7dc3-9ff5-4a68-ac33-7520a9a74ad9",
+  "name": "Reports",
+  "publisher": "DBE",
+  "brief": "",
+  "description": "",
+  "version": "1.0.0.281",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "capabilities": [],
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "14.0.0.0",
+  "application": "14.0.0.0",  
+  "features": ["TranslationFile"],
+  "idRange": {
+    "from": 50100,
+    "to": 99999
+  },
+  "runtime": "3.0",
+  "showMyCode": true
+}

@@ -1,0 +1,118 @@
+page 99950 UpdateExt
+{
+    PageType = Card;
+    ApplicationArea = All;
+    UsageCategory = Administration;
+
+
+    layout
+    {
+        area(Content)
+        {
+            group(GroupName)
+            {
+                field(RcpTransNo; RcpTransNo)
+                {
+                    ApplicationArea = All;
+
+                }
+                field(RcpLineNo; RcpLineNo)
+                {
+                    ApplicationArea = All;
+
+                }
+                field(OrderNoFilter; textOrd)
+                {
+                    ApplicationArea = All;
+
+                }
+                field(intLineOrder; intLineOrder)
+                {
+                    ApplicationArea = All;
+
+                }
+            }
+        }
+    }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(UpdateText)
+            {
+                ApplicationArea = All;
+                Promoted = true;
+                trigger OnAction()
+                begin
+                    UpdateExtText();
+                end;
+            }
+            action(UpdTrans)
+            {
+                ApplicationArea = All;
+                Promoted = true;
+                trigger OnAction()
+                begin
+                    correctTRansferLine();
+                end;
+
+            }
+        }
+    }
+
+    var
+        myInt: Integer;
+        RcpTransNo: Text;
+        RcpLineNo: Integer;
+        textOrd: Text;
+        intLineOrder: Integer;
+
+
+    procedure UpdateExtText()
+    var
+        rec36: Record "Sales Header";
+        rec37: Record "Sales Line";
+        TransferExtendedText: Codeunit "Transfer Extended Text";
+    begin
+        rec36.SetFilter("Document Type", '%1', rec36."Document Type"::Order);
+        if textOrd <> '' then
+            rec36.SetFilter("No.", textOrd)
+        else begin
+            rec36.SetFilter("Posting Date", '%1', DMY2Date(01, 01, 2019));
+            rec36.SetFilter("External Document No.", '%1', 'K*');
+        end;
+
+
+        //rec36.SetFilter("No.", textOrd);
+        if rec36.FindSet() then begin
+            if Confirm('Update ' + Format(rec36.Count()) + ' Order ?') then begin
+                repeat
+                    rec37.SetFilter(Type, '%1', rec37.Type::Item);
+                    rec37.SetFilter("Document Type", '%1', rec37."Document Type"::Order);
+                    rec37.SetFilter("Document No.", rec36."No.");
+                    if rec37.FindSet() then begin
+                        repeat
+                            if TransferExtendedText.SalesCheckIfAnyExtText(rec37, true) THEN
+                                TransferExtendedText.InsertSalesExtText(rec37);
+                        until rec37.Next() = 0;
+                    end;
+
+                until rec36.Next() = 0;
+            end;
+        end;
+    end;
+
+    procedure correctTRansferLine()
+    var
+        recCpTrans: Record "Transfer Receipt Line";
+    begin
+        recCpTrans.get(textOrd, intLineOrder);
+        if RcpTransNo <> '' then
+            recCpTrans.SalesOrderNo := RcpTransNo;
+        if RcpLineNo <> 0 then
+            recCpTrans.SalesOrderLineNo := RcpLineNo;
+        recCpTrans.Modify(false);
+    end;
+
+}

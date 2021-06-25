@@ -1,0 +1,46 @@
+{
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Microsoft cloud sandbox Century",
+            "server": "https://businesscentral.dynamics.com",
+            "tenant": "eda1808c-2b94-42b9-a37d-ee3e3e5102f6",     
+            "sandboxName": "SBProd",       
+            "authentication": "AAD",
+            "type": "al",
+            "request": "launch",
+            "startupObjectId": 22,
+            "breakOnError": false,
+            "breakOnRecordWrite": false,
+            "schemaUpdateMode": "ForceSync"
+            
+        },
+        /*
+        {
+            "name": "Microsoft cloud sandbox Century TEST Christopher Ward",
+            "server": "https://businesscentral.dynamics.com",
+            "tenant": "7e448080-511d-44af-abb3-e4fd7749b341",            
+            "authentication": "AAD",
+            "type": "al",
+            "request": "launch",
+            "startupObjectId": 22,
+            "breakOnError": true,
+            "breakOnRecordWrite": false,
+            "schemaUpdateMode": "Recreate"
+        },
+        
+        {
+            "name": "Microsoft cloud sandbox",
+            "type": "al",
+            "request": "launch",
+            "startupObjectId": 2000000005,
+            "startupObjectType": "Table",
+            "breakOnError": true,
+            "breakOnRecordWrite": false,  
+            "schemaUpdateMode": "Recreate",          
+        }*/
+    ]
+}
